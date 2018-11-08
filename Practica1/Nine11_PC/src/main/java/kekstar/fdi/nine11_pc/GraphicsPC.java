@@ -13,10 +13,11 @@ public class GraphicsPC implements Graphics {
 
     public GraphicsPC(JFrame frame) {
         this._frame = frame;
-        this._awtGraphics = _frame.getGraphics();
         this._frame.setSize(400, 400);
         this._frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this._frame.setVisible(true);
+        this._awtGraphics = _frame.getGraphics();
+
     }
 
     @Override
@@ -37,6 +38,7 @@ public class GraphicsPC implements Graphics {
     @Override
     public boolean drawImage(Image im, Rect dest, Rect source) {
         ImagePC temp = (ImagePC)im;
+
         _awtGraphics.drawImage(temp.get_AwtImage(),
                 dest.get_x(), dest.get_y(), dest.get_x()+dest.get_width(), dest.get_y()+dest.get_height(),
                 source.get_x(), source.get_y(), source.get_x()+source.get_width(), source.get_y()+source.get_height(),
@@ -46,7 +48,6 @@ public class GraphicsPC implements Graphics {
 
     @Override
     public ImagePC newImage(String name) {
-        ImagePC a;
         try {
             java.awt.Image temp = ImageIO.read(new java.io.File(name));
             return new ImagePC(temp);

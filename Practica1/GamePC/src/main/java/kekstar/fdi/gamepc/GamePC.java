@@ -1,12 +1,11 @@
-package kekstar.fdi.nine11_pc;
+package kekstar.fdi.gamepc;
 
 import javax.swing.JFrame;
+import kekstar.fdi.nine11_pc.*;
+import kekstar.fdi.engine.*;
 
-import kekstar.fdi.engine.Graphics;
-import kekstar.fdi.engine.Rect;
-
-public class Nine11_PC {
-    public static void Main (String [] args)
+public class GamePC {
+    public static void main (String [] args)
     {
         System.out.print("UH BABY BABY IT'S A WILD WORLD");
 

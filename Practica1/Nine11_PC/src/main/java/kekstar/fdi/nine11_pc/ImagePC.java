@@ -8,13 +8,10 @@ public class ImagePC implements Image {
     }
 
     @Override
-    public int getWidth() {
-        return _rect.get_width();
-    }
-
+    public int getWidth() { return _image.getWidth(null); }
     @Override
-    public int getHeigth() {
-        return _rect.get_width();
+    public int getHeight() {
+        return _image.getHeight(null);
     }
 
     public java.awt.Image get_AwtImage() {
@@ -22,5 +19,4 @@ public class ImagePC implements Image {
     }
 
     java.awt.Image _image;
-    Rect _rect;
 }

@@ -1,1 +1,1 @@
-include ':app', ':engine', ':Nine11_PC'
+include ':app', ':engine', ':Nine11_PC', ':Game', ':GamePC', ':GamePC', ':GamePC', ':GamePC'
