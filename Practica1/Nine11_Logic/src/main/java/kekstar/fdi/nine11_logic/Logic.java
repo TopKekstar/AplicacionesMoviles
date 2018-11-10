@@ -36,10 +36,7 @@ public class Logic {
     {
         pollEvents();
 
-
-
-
-
+        
         String prueba = new String("HOLA GUINDILLA");
         _game.getGraphics().clear(0x00000000);
         int margin = 16;
