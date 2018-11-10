@@ -15,10 +15,10 @@ public class GraphicsPC implements Graphics {
 
 
     public GraphicsPC(JFrame frame) {
-        this._height = 600;
+        this._height = 640;
         this._width = 800;
         this._frame = frame;
-        this._frame.setSize(800, 600);
+        this._frame.setSize(_width, _height);
         this._frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this._frame.setUndecorated(true);
         //We put the game in the fockin middle, as it should be the most important Application currently running, of course.

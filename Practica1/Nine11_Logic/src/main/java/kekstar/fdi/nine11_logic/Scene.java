@@ -14,11 +14,10 @@ public class Scene {
         _sceneIndex = sceneIndex;
        rows = rowss;
        cols = columns;
-       map = new char [rows*cols];
+       map = new int [rows*cols];
 
-       byte j = 0;
-       for(int i = 0; i < map.length; i ++){
-           map[i] = (char)(i%255);
+       for(int i = 0; i < map.length; i++){
+           map[i] = (i%255);
        }
 
     }
@@ -34,11 +33,11 @@ public class Scene {
         calculateTileSize(g.getWidth(), g.getHeight());
         int i = 0;
         int j = 0;
-        for (char a : map){
+        for (int a : map){
             Rect dest = new Rect((i*_tileX)+(marginS), (j*_tileY)+(marginT), _tileX, _tileY);
-            _sprites.get((int)a).draw(g, dest);
+            _sprites.get(a).draw(g, dest);
             i++;
-            if(i >= cols)
+            if(i > cols)
             {
                 j++;
                 i = 0;
@@ -78,7 +77,7 @@ public class Scene {
 
     String _name;
     int _sceneIndex;
-    char [] map;
+    int [] map;
     int _sHeight;
     int _sWidth;
     int rows;
