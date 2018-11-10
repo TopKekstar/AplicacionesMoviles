@@ -19,7 +19,7 @@ import kekstar.fdi.nine11_logic.Logic;
 public class MainActivity extends AppCompatActivity implements Game {
 
     protected GraphicsAndroid     graphics_;
-    private InputAndroid        input_;
+    protected InputAndroid        input_;
     private MyView              renderView_;
     private Logic               logic_;
 
@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements Game {
         renderView_ = new MyView(this,this);
         graphics_ = new GraphicsAndroid(renderView_,assetManager);
         input_ = new InputAndroid();
-
         logic_ = new Logic(this);
         logic_.initLogic();
         setContentView(renderView_);
@@ -64,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements Game {
     }
 
     class MyView extends SurfaceView implements Runnable {
-        Image img;
         Game game_;
         public MyView(Context context, Game game) {
             super(context);
