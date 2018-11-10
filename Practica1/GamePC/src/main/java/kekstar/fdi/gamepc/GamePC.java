@@ -15,14 +15,17 @@ public class GamePC implements Game{
     public static void main (String [] args)
     {
         System.out.print("Init Game..");
-        GraphicsPC g = new GraphicsPC(new JFrame("Nine11"));
-        //TODO: Input I = declaration
-        Logic l = new Logic(new GamePC(g, null));
+        JFrame frame = new JFrame("Nine11");
+        GraphicsPC g = new GraphicsPC(frame);
+        InputPC i = new InputPC(frame);
+        Logic l = new Logic(new GamePC(g, i));
+
         l.initLogic();
+        boolean close = false;
+        while(!close) l.run();
 
-        while(true) l.run();
 
-
+        i.release();
 
     }
     @Override
