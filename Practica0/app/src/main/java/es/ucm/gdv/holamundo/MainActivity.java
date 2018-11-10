@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         _renderView = new MyView(this);
-        setContentView(new MyView(this));
+        setContentView(_renderView);
     }
 
     @Override
@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     class MyView extends SurfaceView implements Runnable {
         public MyView(Context context) {
             super(context);
+
             _lastFrameTime = System.nanoTime();
             if (_sprite != null)
                 _imageWidth = _sprite.getWidth();
@@ -125,7 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 c.drawBitmap(_sprite, (int) _x, 100, null);
 
 
-                invalidate();
+
+                //invalidate();
             }
         }
 
