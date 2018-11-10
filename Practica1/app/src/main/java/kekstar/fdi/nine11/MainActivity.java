@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity implements Game {
         logic_ = new Logic(this);
         logic_.initLogic();
         setContentView(renderView_);
+        renderView_.setOnTouchListener(input_);
 
 
 
