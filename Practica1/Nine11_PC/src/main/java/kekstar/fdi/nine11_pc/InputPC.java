@@ -8,7 +8,7 @@ public class InputPC implements Input {
     public InputPC() {
     }
 
-    //TODO: Implement inputPC and getTouchEvents
+    //TODO: Implementar inputPC y getTouchEvents
     @Override
     public List<TouchEvent>  getTouchEvents(){
 

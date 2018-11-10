@@ -9,6 +9,11 @@ public class Sprite{
         this._img = a;
         this._src = src;
     }
+    public Sprite(String path, Rect src, Graphics g){
+        this._img = g.newImage(path);
+        this._src = src;
+    }
+
     public Rect getSrcRect() {
         return _src;
     }
