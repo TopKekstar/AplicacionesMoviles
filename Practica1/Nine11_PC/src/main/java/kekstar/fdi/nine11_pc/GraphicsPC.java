@@ -51,9 +51,16 @@ public class GraphicsPC implements Graphics {
     public boolean drawImage(Image im, Rect dest, Rect source) {
         ImagePC temp = (ImagePC)im;
 
-        _frame.getBufferStrategy().getDrawGraphics().drawImage(temp.get_AwtImage(),
-                dest.get_x(), dest.get_y(), dest.get_x()+dest.get_width(), dest.get_y()+dest.get_height(),
-                source.get_x(), source.get_y(), source.get_x()+source.get_width(), source.get_y()+source.get_height(),
+        _frame.getBufferStrategy().getDrawGraphics().drawImage(
+                temp.get_AwtImage(),
+                dest.get_x(),
+                dest.get_y(),
+                dest.get_x()+dest.get_width(),
+                dest.get_y()+dest.get_height(),
+                source.get_x(),
+                source.get_y(),
+                source.get_x()+source.get_width(),
+                source.get_y()+source.get_height(),
                 null);
         return true;
     }

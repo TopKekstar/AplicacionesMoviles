@@ -23,7 +23,7 @@ public class Logic {
     public void initLogic()
     {
         sprites = new ArrayList<>();
-        Image spritesheet = _game.getGraphics().newImage("./Assets/ASCII_05.png");
+        Image spritesheet = _game.getGraphics().newImage("Assets/ASCII_05.png");
         for (int i = 0; i < 16; i++) {
             for(int j = 0; j < 16; j++) {
                 Sprite temp = new Sprite(spritesheet, new Rect(16 * j, 16 * i, 16, 16));
@@ -46,10 +46,10 @@ public class Logic {
         int i = 0;
         int j = 0;
         for (int x = 0; x < prueba.length(); x++){
-            sprites.get(prueba.charAt(x)).draw(_game.getGraphics(), new Rect(x*16, 32, 16, 16));
+            sprites.get((int)prueba.charAt(x)).draw(_game.getGraphics(), new Rect(x*64, 32, 64, 64));
         }
 
-        sprites.get(65).draw(_game.getGraphics(),new Rect(32,0, 32,32));
+        sprites.get(1).draw(_game.getGraphics(),new Rect(32,0, 32,32));
         _game.getGraphics().present();
 
     }
@@ -57,12 +57,13 @@ public class Logic {
     public void pollEvents(){
         List<TouchEvent> temp;
         temp = _game.getInput().getTouchEvents();
-
-        for(TouchEvent tE : temp ){
-            synchronized (this){
-                System.out.print("EVENT RECIEVED:\n");
-                System.out.print("Event type: " +tE.get_eventType()+ "\n");
-                temp.remove(tE);
+        if(temp!=null) {
+            for (TouchEvent tE : temp) {
+                synchronized (this) {
+                    System.out.print("EVENT RECIEVED:\n");
+                    System.out.print("Event type: " + tE.get_eventType() + "\n");
+                    temp.remove(tE);
+                }
             }
         }
 
