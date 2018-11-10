@@ -12,7 +12,7 @@ import kekstar.fdi.engine.Input;
 import kekstar.fdi.engine.TouchEvent;
 
 public class InputAndroid implements Input,View.OnTouchListener {
-    InputAndroid(){
+    public InputAndroid(){
         touchEvents = new LinkedList<TouchEvent>();
     }
     @Override
