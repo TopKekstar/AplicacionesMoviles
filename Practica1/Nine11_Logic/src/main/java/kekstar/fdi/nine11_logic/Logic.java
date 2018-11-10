@@ -21,29 +21,33 @@ public class Logic {
     public void initLogic()
     {
         sprites = new ArrayList<>();
-
-        dest = new Rect (100, 100, 150, 150);
-        temp = 0f;
-        Sprite a = new Sprite("./Assets/debug.log", new Rect(0,0,150, 150), _game.getGraphics());
-        sprites.add(a);
+        Image spritesheet = _game.getGraphics().newImage("./Assets/ASCII_05.png");
+        for (int i = 0; i < 16; i++) {
+            for(int j = 0; j < 16; j++) {
+                Sprite temp = new Sprite(spritesheet, new Rect(16 * j, 16 * i, 16, 16));
+                sprites.add(temp);
+            }
+        }
 
     }
     public void run()
     {
+
+        String prueba = new String("HOLA GUINDILLA");
         _game.getGraphics().clear(0x00000000);
-        dest.set_x(dest.get_x()+ (int)temp);
-        if(temp > 1 )temp = 0;
-
-        for(Sprite s: sprites){
-            s.draw(_game.getGraphics(),dest);
-
+        int margin = 16;
+        int i = 0;
+        int j = 0;
+        for (int x = 0; x < prueba.length(); x++){
+            sprites.get(prueba.charAt(x)).draw(_game.getGraphics(), new Rect(x*16, 32, 16, 16));
         }
+
+        sprites.get(65).draw(_game.getGraphics(),new Rect(32,0, 32,32));
         _game.getGraphics().present();
+
     }
 
     Game _game;
-    Rect dest;
-    float temp;
     ArrayList<Sprite> sprites;
 
 }

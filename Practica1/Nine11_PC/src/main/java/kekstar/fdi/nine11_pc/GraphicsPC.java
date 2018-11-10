@@ -1,6 +1,7 @@
 package kekstar.fdi.nine11_pc;
 
 import java.awt.Color;
+import java.awt.Toolkit;
 import java.awt.image.BufferStrategy;
 
 
@@ -14,9 +15,14 @@ public class GraphicsPC implements Graphics {
 
 
     public GraphicsPC(JFrame frame) {
+        this._height = 600;
+        this._width = 800;
         this._frame = frame;
-        this._frame.setSize(400, 400);
+        this._frame.setSize(800, 600);
         this._frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this._frame.setUndecorated(true);
+        //We put the game in the fockin middle, as it should be the most important Application currently running, of course.
+        this._frame.setLocation((Toolkit.getDefaultToolkit().getScreenSize().width/2)-_width/2, (Toolkit.getDefaultToolkit().getScreenSize().height/2)-_height/2);
         this._frame.setVisible(true);
         _frame.createBufferStrategy(2);
         this._strategy = _frame.getBufferStrategy();
@@ -78,4 +84,6 @@ public class GraphicsPC implements Graphics {
     java.awt.Graphics _awtGraphics;
     BufferStrategy _strategy;
     JFrame _frame;
+    int _width;
+    int _height;
 }

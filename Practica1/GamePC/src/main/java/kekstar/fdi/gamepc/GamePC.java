@@ -20,7 +20,7 @@ public class GamePC implements Game{
         Logic l = new Logic(new GamePC(g, null));
         l.initLogic();
 
-        l.run();
+        while(true) l.run();
 
 
 
