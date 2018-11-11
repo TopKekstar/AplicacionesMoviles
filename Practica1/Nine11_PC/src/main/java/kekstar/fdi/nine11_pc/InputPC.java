@@ -36,7 +36,7 @@ public class InputPC implements Input, MouseListener {
     @Override
     public void mousePressed(MouseEvent mouseEvent) {
         synchronized (this){
-            _touchEvents.add(new TouchEvent(mouseEvent.getButton(), TouchEvent.eventType.BUTTON_PRESSED));
+            _touchEvents.add(new TouchEvent(mouseEvent.getButton(), TouchEvent.eventType.BUTTON_PRESSED,mouseEvent.getX(),mouseEvent.getY()));
         }
     }
     @Override

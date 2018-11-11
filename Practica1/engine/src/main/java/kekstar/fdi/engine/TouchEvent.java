@@ -8,7 +8,9 @@ public class TouchEvent {
         DRAGING
     }
 
-    public TouchEvent(int buttonIndex, eventType eventType){
+    public TouchEvent(int buttonIndex, eventType eventType, int x_, int y_){
+        this.x_ = x_;
+        this.y_ = y_;
         this._buttonIndex = buttonIndex;
         this._eventType = eventType;
 
@@ -24,4 +26,17 @@ public class TouchEvent {
 
     int _buttonIndex;
     eventType _eventType;
+    int x_;
+    int y_;
+
+
+    public int getX() {
+        return x_;
+    }
+
+    public int getY() {
+        return y_;
+    }
+
+
 }

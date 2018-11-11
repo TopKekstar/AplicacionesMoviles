@@ -1,4 +1,5 @@
 package kekstar.fdi.engineandroid;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -11,13 +12,17 @@ import java.util.ListIterator;
 import kekstar.fdi.engine.Input;
 import kekstar.fdi.engine.TouchEvent;
 
+import static android.content.ContentValues.TAG;
+
 public class InputAndroid implements Input,View.OnTouchListener {
+
     public InputAndroid(){
-        touchEvents = new LinkedList<TouchEvent>();
+        touchEvents = new LinkedList<>();
+
     }
     @Override
     public List<TouchEvent> getTouchEvents() {
-        return null;
+        return touchEvents;
     }
 
     @Override
@@ -27,7 +32,33 @@ public class InputAndroid implements Input,View.OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        return false;
+        boolean insert = false;
+        TouchEvent.eventType eventType=null;
+        switch (event.getAction())
+        {
+            case MotionEvent.ACTION_DOWN:
+                eventType = TouchEvent.eventType.BUTTON_PRESSED;
+                insert = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                eventType = TouchEvent.eventType.BUTTON_RELEASED;
+                insert = true;
+                break;
+        }
+        if(insert) {
+            TouchEvent touchEvent = new TouchEvent(
+                    event.getActionIndex(),
+                    eventType,
+                    (int) event.getX(),
+                    (int) event.getY());
+
+
+            synchronized (this) {
+                touchEvents.addLast(touchEvent);
+            }
+        }
+
+        return true;
     }
-    List<TouchEvent> touchEvents;
+    LinkedList<TouchEvent> touchEvents;
 }
