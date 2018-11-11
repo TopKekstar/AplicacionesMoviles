@@ -3,7 +3,9 @@ package kekstar.fdi.nine11_logic;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 import java.util.Vector;
 
@@ -25,20 +27,30 @@ public class Logic {
     {
 
         loadSpritesheet();
-        _scenes = new Stack<Scene>();
-        _scenes.push(new Scene("Prueba", 0, sprites, 20, 25));
+        _scenes = new LinkedList<>();
+        _activeScene = 0;
+        _scenes.push(new Scene("Prueba", 0, sprites, 20, 25, this));
 
     }
-    public void run()
+    public boolean run()
     {
         pollEvents();
 
-        
-        _scenes.peek().draw(_game.getGraphics());
+
+        _scenes.get(_activeScene).tick();
+        _scenes.get(_activeScene).draw(_game.getGraphics());
         _game.getGraphics().present();
+
+
+        return true;
     }
 
-    public void pollEvents(){
+    private void onClick()
+    {
+
+    }
+
+    private void pollEvents(){
         List<TouchEvent> temp;
         temp = _game.getInput().getTouchEvents();
         if(temp!=null) {
@@ -51,12 +63,13 @@ public class Logic {
                 }
             }
         }
-
     }
 
-    void loadSpritesheet(){
+   private void loadSpritesheet(){
         sprites = new ArrayList<>();
-        Image spritesheet = _game.getGraphics().newImage("Assets/ASCII_05.png");
+        Random rnd = new Random();
+        int n = rnd.nextInt(15)+1;
+        Image spritesheet = _game.getGraphics().newImage("Assets/ASCII_"+n+".png");
         for (int i = 0; i < 16; i++) {
             for(int j = 0; j < 16; j++) {
                 Sprite temp = new Sprite(spritesheet, new Rect(16 * j, 16 * i, 16, 16));
@@ -64,10 +77,18 @@ public class Logic {
             }
         }
     }
+    public void setGamedificulty(int difficulty, int height){
+        _gameDif = difficulty;
+        _gameHeight = height;
+    }
+
 
     Game _game;
     ArrayList<Sprite> sprites;
-    Stack<Scene> _scenes;
+    LinkedList<Scene> _scenes;
+    int _activeScene;
+    int _gameDif;
+    int _gameHeight;
 
 }
 

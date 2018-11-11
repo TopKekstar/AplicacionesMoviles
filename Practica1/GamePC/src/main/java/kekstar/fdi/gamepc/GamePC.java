@@ -21,8 +21,7 @@ public class GamePC implements Game{
         Logic l = new Logic(new GamePC(g, i));
 
         l.initLogic();
-        boolean close = false;
-        while(!close) l.run();
+        while(l.run()) ;
 
 
         i.release();

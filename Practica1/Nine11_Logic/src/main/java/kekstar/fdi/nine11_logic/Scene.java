@@ -1,5 +1,6 @@
 package kekstar.fdi.nine11_logic;
 
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 import kekstar.fdi.engine.Graphics;
@@ -7,7 +8,7 @@ import kekstar.fdi.engine.Rect;
 
 //TODO: Implementar clase escena. Clase genérica de la que heredarán el resto de escenas.
 public class Scene {
-    public Scene(String name, int sceneIndex, List<Sprite> sprites, int columns, int rowss)
+    public Scene(String name, int sceneIndex, List<Sprite> sprites, int columns, int rowss, Logic logic)
     {
        if(_sprites == null) _sprites = sprites;
        _name = name;
@@ -15,17 +16,33 @@ public class Scene {
        rows = rowss;
        cols = columns;
        map = new int [rows*cols];
-
+       loop = 0;
        for(int i = 0; i < map.length; i++){
-           map[i] = (i%255);
+           if(i < 2*columns)map[i] = 32;
+           else map[i] = (i%255);
        }
-
+       pastTime = System.nanoTime();
+       currentTime = pastTime;
     }
-    public void tick()
+    public boolean tick()
     {
+        loop++;
+        currentTime = System.nanoTime();
+        if(currentTime - pastTime >= 1*10e8){
 
+            for(int i = 0; i < Integer.toString(loop*10).length(); i++){
+
+                map [(i+1)] = Integer.toString(loop*10).charAt(i);
+                System.out.println(loop);
+            }
+
+            loop = 0;
+            pastTime = currentTime;
+        }
+        return true;
     }
-
+    public void onClick(MouseEvent evt)
+    {}
     public void draw(Graphics g)
     {
         g.clear(0x00000000);
@@ -34,7 +51,7 @@ public class Scene {
         int i = 0;
         int j = 0;
         for (int a : map){
-            Rect dest = new Rect((i*_tileX)+(marginS), (j*_tileY)+(marginT), _tileX, _tileY);
+            Rect dest = new Rect(((i*(int)_tileX)+(int)(marginS/2)), (j*(int)_tileY)+(int)(marginT/2), (int)_tileX, (int)_tileY);
             _sprites.get(a).draw(g, dest);
             i++;
             if(i > cols)
@@ -49,16 +66,17 @@ public class Scene {
         _sHeight = realScreenY;
 
         //Variables para guardar el ancho a mantener con los lados o el TOP/BOT
-        marginS = 0;
-        marginT= 0;
-        float aspectR = (float)_sWidth /(float)_sHeight;
+        marginS = 16;
+        marginT= 16;
+        float aspectR = _sWidth /_sHeight;
 
         if(aspectR < 1.33f){
-            _sHeight = (int)(_sWidth / 1.33f);
+            _sHeight = (_sWidth / 1.33f);
+            marginT = realScreenY-_sHeight;
             marginT = realScreenY-_sHeight;
         }
         else if (aspectR > 1.33f){
-            _sWidth = (int)(1.33f * (float)_sHeight);
+            _sWidth = (1.33f * (float)_sHeight);
             marginS = realScreenX-_sWidth;
         }
 
@@ -73,19 +91,21 @@ public class Scene {
     public int get_sceneIndex() {
         return _sceneIndex;
     }
-
-
+    int loop;
+    long pastTime;
+    long currentTime;
     String _name;
     int _sceneIndex;
     int [] map;
-    int _sHeight;
-    int _sWidth;
     int rows;
     int cols;
-    int _tileX;
-    int _tileY;
-    int marginT;
-    int marginS;
+    float _sHeight;
+    float _sWidth;
+    float _tileX;
+    float _tileY;
+    float marginT;
+    float marginS;
     static List<Sprite> _sprites;
+    Logic l;
 
 }

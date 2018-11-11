@@ -16,7 +16,7 @@ public class GraphicsPC implements Graphics {
 
     public GraphicsPC(JFrame frame) {
         this._height = 640;
-        this._width = 800;
+        this._width = 1024;
         this._frame = frame;
         this._frame.setSize(_width, _height);
         this._frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
