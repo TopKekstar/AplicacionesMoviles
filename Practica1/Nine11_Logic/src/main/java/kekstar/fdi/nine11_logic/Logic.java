@@ -30,10 +30,10 @@ public class Logic {
         _scenes = new LinkedList<>();
         _activeScene = 0;
         _scenes.push(new Scene("Prueba", 0, sprites, 20, 25, this));
-
     }
     public boolean run()
     {
+
         pollEvents();
 
 

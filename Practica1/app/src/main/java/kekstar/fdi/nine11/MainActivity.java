@@ -31,10 +31,10 @@ public class MainActivity extends AppCompatActivity implements Game {
         renderView_ = new MyView(this,this);
         graphics_ = new GraphicsAndroid(renderView_,assetManager);
         input_ = new InputAndroid();
+        renderView_.setOnTouchListener(input_);
         logic_ = new Logic(this);
         logic_.initLogic();
         setContentView(renderView_);
-        renderView_.setOnTouchListener(input_);
 
 
 

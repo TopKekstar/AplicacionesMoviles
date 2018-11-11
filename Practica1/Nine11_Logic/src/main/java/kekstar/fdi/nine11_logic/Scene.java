@@ -33,7 +33,7 @@ public class Scene {
             for(int i = 0; i < Integer.toString(loop*10).length(); i++){
 
                 map [(i+1)] = Integer.toString(loop*10).charAt(i);
-                System.out.println(loop);
+                //System.out.println(loop);
             }
 
             loop = 0;
