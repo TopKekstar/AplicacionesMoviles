@@ -3,6 +3,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -12,6 +13,8 @@ import java.io.InputStream;
 import kekstar.fdi.engine.Graphics;
 import kekstar.fdi.engine.Image;
 import kekstar.fdi.engine.Rect;
+
+import static android.content.ContentValues.TAG;
 
 public class GraphicsAndroid implements Graphics  {
     private SurfaceView surfaceView_;
@@ -81,6 +84,9 @@ public class GraphicsAndroid implements Graphics  {
             img = new ImageAndroid(sprite_);
             inputStream.close();
         }catch (IOException e){
+            Log.d(TAG, "newImage: "+ e.getMessage());
+
+            
 
         }
 
