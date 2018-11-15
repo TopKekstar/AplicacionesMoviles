@@ -1,6 +1,7 @@
 package kekstar.fdi.nine11_logic;
 
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import kekstar.fdi.engine.Graphics;
@@ -8,7 +9,7 @@ import kekstar.fdi.engine.Rect;
 
 //TODO: Implementar clase escena. Clase genérica de la que heredarán el resto de escenas.
 public class Scene {
-    public Scene(String name, int sceneIndex, List<Sprite> sprites, int columns, int rowss, Logic logic)
+    public Scene(String name, int sceneIndex, ArrayList<ArrayList<Sprite>> sprites, int columns, int rowss, Logic logic)
     {
        if(_sprites == null) _sprites = sprites;
        _name = name;
@@ -18,8 +19,7 @@ public class Scene {
        map = new int [rows*cols];
        loop = 0;
        for(int i = 0; i < map.length; i++){
-           if(i < 2*columns)map[i] = 32;
-           else map[i] = (i%255);
+          map[i] = Integer.toString(i).charAt(0);
        }
        pastTime = System.nanoTime();
        currentTime = pastTime;
@@ -32,7 +32,7 @@ public class Scene {
 
             for(int i = 0; i < Integer.toString(loop*10).length(); i++){
 
-                map [(i+1)] = Integer.toString(loop*10).charAt(i);
+               // map [(i+1)] = Integer.toString(loop*10).charAt(i);
                 //System.out.println(loop);
             }
 
@@ -48,12 +48,15 @@ public class Scene {
         g.clear(0x00000000);
 
         calculateTileSize(g.getWidth(), g.getHeight());
+
+
         int i = 0;
         int j = 0;
         for (int a : map){
             Rect dest = new Rect(((i*(int)_tileX)+(int)(marginS/2)), (j*(int)_tileY)+(int)(marginT/2), (int)_tileX, (int)_tileY);
-            _sprites.get(a).draw(g, dest);
+            _sprites.get(a%16).get(a).draw(g, dest);
             i++;
+
             if(i > cols)
             {
                 j++;
@@ -72,7 +75,6 @@ public class Scene {
 
         if(aspectR < 1.33f){
             _sHeight = (_sWidth / 1.33f);
-            marginT = realScreenY-_sHeight;
             marginT = realScreenY-_sHeight;
         }
         else if (aspectR > 1.33f){
@@ -105,7 +107,7 @@ public class Scene {
     float _tileY;
     float marginT;
     float marginS;
-    static List<Sprite> _sprites;
+    static ArrayList<ArrayList<Sprite>> _sprites;
     Logic l;
 
 }
