@@ -17,13 +17,6 @@ import kekstar.fdi.engine.TouchEvent;
 //TODO: Implementar Lógica y su bucle de juego.
 
 
-enum gameState {
-    LoadScene,
-    IniScene,
-    DifScene,
-    GameScene,
-    EndScene
-}
 
 public class Logic {
 
@@ -36,20 +29,19 @@ public class Logic {
     {
         sprites = new ArrayList<ArrayList<Sprite>>();
         images = new ArrayList<>();
-        _scenes = new LinkedList<>();
+        _states = new LinkedList<>();
 
         loadSpritesheets();
         _activeScene = 0;
-        _scenes.push(new Scene("Prueba", 0, sprites, 20, 25, this));
+        _states.push(new InstructionsState(_game, this));
+        _states.get(0).init();
     }
     public boolean run()
     {
 
         pollEvents();
-
-
-        _scenes.get(_activeScene).tick();
-        _scenes.get(_activeScene).draw(_game.getGraphics());
+        _states.get(_activeScene).tick();
+        _states.get(_activeScene).draw();
         _game.getGraphics().present();
 
 
@@ -99,12 +91,15 @@ public class Logic {
         _gameDif = difficulty;
         _gameHeight = height;
     }
+    public Sprite getSprite(int color, char character){
+        return sprites.get(color).get(character);
+    }
 
 
     Game _game;
     ArrayList<ArrayList<Sprite>> sprites;
     ArrayList<Image>images;
-    LinkedList<Scene> _scenes;
+    LinkedList<GameState> _states;
     int _activeScene;
     int _gameDif;
     int _gameHeight;

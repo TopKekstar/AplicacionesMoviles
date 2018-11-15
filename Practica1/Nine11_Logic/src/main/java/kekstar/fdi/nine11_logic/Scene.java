@@ -8,6 +8,9 @@ import kekstar.fdi.engine.Graphics;
 import kekstar.fdi.engine.Rect;
 
 //TODO: Implementar clase escena. Clase genérica de la que heredarán el resto de escenas.
+
+
+/*
 public class Scene {
     public Scene(String name, int sceneIndex, ArrayList<ArrayList<Sprite>> sprites, int columns, int rowss, Logic logic)
     {
@@ -110,4 +113,4 @@ public class Scene {
     static ArrayList<ArrayList<Sprite>> _sprites;
     Logic l;
 
-}
+}*/
