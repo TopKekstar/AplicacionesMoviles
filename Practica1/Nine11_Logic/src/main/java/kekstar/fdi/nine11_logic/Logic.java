@@ -16,6 +16,15 @@ import kekstar.fdi.engine.Rect;
 import kekstar.fdi.engine.TouchEvent;
 //TODO: Implementar Lógica y su bucle de juego.
 
+
+enum gameState {
+    LoadScene,
+    IniScene,
+    DifScene,
+    GameScene,
+    EndScene
+}
+
 public class Logic {
 
     public Logic(Game game)
@@ -25,9 +34,11 @@ public class Logic {
 
     public void initLogic()
     {
-
-        loadSpritesheet();
+        sprites = new ArrayList<ArrayList<Sprite>>();
+        images = new ArrayList<>();
         _scenes = new LinkedList<>();
+
+        loadSpritesheets();
         _activeScene = 0;
         _scenes.push(new Scene("Prueba", 0, sprites, 20, 25, this));
     }
@@ -65,17 +76,24 @@ public class Logic {
         }
     }
 
-   private void loadSpritesheet(){
-        sprites = new ArrayList<>();
-        Random rnd = new Random();
-        int n = rnd.nextInt(15)+1;
-        Image spritesheet = _game.getGraphics().newImage("Assets/ASCII_"+n+".png");
-        for (int i = 0; i < 16; i++) {
-            for(int j = 0; j < 16; j++) {
-                Sprite temp = new Sprite(spritesheet, new Rect(16 * j, 16 * i, 16, 16));
-                sprites.add(temp);
-            }
-        }
+   private void loadSpritesheets(){
+
+       int n = 0;
+       for (n = 0; n < 16; n++) {
+
+           Image spritesheet = _game.getGraphics().newImage("Assets/ASCII_" + n + ".png");
+           images.add(spritesheet);
+           ArrayList<Sprite> sSheet = new ArrayList<>();
+
+           for (int i = 0; i < 16; i++) {
+               for (int j = 0; j < 16; j++) {
+                   Sprite temp = new Sprite(spritesheet, new Rect(16 * j, 16 * i, 16, 16));
+                   sSheet.add(temp);
+               }
+           }
+
+           sprites.add(sSheet);
+       }
     }
     public void setGamedificulty(int difficulty, int height){
         _gameDif = difficulty;
@@ -84,7 +102,8 @@ public class Logic {
 
 
     Game _game;
-    ArrayList<Sprite> sprites;
+    ArrayList<ArrayList<Sprite>> sprites;
+    ArrayList<Image>images;
     LinkedList<Scene> _scenes;
     int _activeScene;
     int _gameDif;
