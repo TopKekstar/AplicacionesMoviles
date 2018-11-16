@@ -5,7 +5,7 @@ public class TouchEvent {
     public enum eventType{
         BUTTON_PRESSED,
         BUTTON_RELEASED,
-        DRAGING
+        DRAGGING
     }
 
     public TouchEvent(int buttonIndex, eventType eventType, int x_, int y_){

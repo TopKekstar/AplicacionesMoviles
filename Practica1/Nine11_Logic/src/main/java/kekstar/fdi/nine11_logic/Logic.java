@@ -2,6 +2,8 @@ package kekstar.fdi.nine11_logic;
 
 
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.Template;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,40 +34,20 @@ public class Logic {
         _states = new LinkedList<>();
 
         loadSpritesheets();
-        _activeScene = 0;
-        _states.push(new InstructionsState(_game, this));
+        _activeState = 0;
+        _states.add(new InstructionsState(_game, this));
+        _states.add(new DificultyState(_game, this));
+
         _states.get(0).init();
     }
     public boolean run()
     {
-
-        pollEvents();
-        _states.get(_activeScene).tick();
-        _states.get(_activeScene).draw();
+        _states.get(_activeState).tick();
+        _states.get(_activeState).draw();
         _game.getGraphics().present();
 
 
         return true;
-    }
-
-    private void onClick()
-    {
-
-    }
-
-    private void pollEvents(){
-        List<TouchEvent> temp;
-        temp = _game.getInput().getTouchEvents();
-        if(temp!=null) {
-            for (TouchEvent tE : temp) {
-                synchronized (this) {
-                    System.out.print("EVENT RECIEVED:\n");
-                    System.out.print("Event type: " + tE.get_eventType() + "\n");
-                    System.out.print("Button Pressed: " + tE.get_buttonIndex() + "\n");
-                    temp.remove(tE);
-                }
-            }
-        }
     }
 
    private void loadSpritesheets(){
@@ -96,11 +78,38 @@ public class Logic {
     }
 
 
+    public void changeScene(int nScene){
+        int temp = _activeState;
+        _activeState = nScene;
+        _states.get(temp).deinit();
+        _states.get(_activeState).init();
+
+    }
+    public int get_activeState() {
+        return _activeState;
+    }
+
+    public void set_gameDif(int ndif){
+        _gameDif = ndif;
+    }
+    public int get_gameDif(){
+        return _gameDif;
+    }
+    public void set_gameHeight(int nHeight){
+        _gameHeight = nHeight;
+    }
+
+    public int get_gameHeight(){
+        return _gameHeight;
+    }
+
     Game _game;
     ArrayList<ArrayList<Sprite>> sprites;
     ArrayList<Image>images;
+
     LinkedList<GameState> _states;
-    int _activeScene;
+
+    int _activeState;
     int _gameDif;
     int _gameHeight;
 

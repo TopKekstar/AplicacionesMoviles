@@ -32,8 +32,11 @@ enum color {
 public  class Screen {
     Game _game;
     Logic _logic;
-    int _cols;
-    int _rows;
+
+
+
+    private int _cols;
+    private int _rows;
     char[][] grid;
     int[][] _colors;
     int _sWidth;
@@ -50,8 +53,8 @@ public  class Screen {
         _game = game;
         _sHeight = game.getGraphics().getHeight();
         _sWidth = game.getGraphics().getWidth();
-        _marginX = 0;
-        _marginY = 0;
+        _marginX = 16;
+        _marginY = 16;
 
     }
     public void init (int rows, int cols){
@@ -69,23 +72,32 @@ public  class Screen {
     public void clear(int color) {
         _game.getGraphics().clear(color);
     }
+
+
     //TODO: Metodo que imprime una serie de caracteres comenzando en una posición
     public void print(String toPrint, int xStart, int yStart, color color) {
         //TODO: Comprobar si la cadena de texto es más grande de lo que soporta la pantalla
 
         int n = 0;
-        for (int i = yStart; i < _rows; i++) {
-            for (int j = xStart; j < _cols; j++) {
-                if(n >= toPrint.length())
-                    return;
-                else if(toPrint.charAt(n) == '\n'){
-                    n++;
-                    break;
-                }
+        int i = yStart;
+        int j = xStart;
+
+        while (n < toPrint.length()) {
+            if(toPrint.charAt(n) != '\n') {
                 grid[i][j] = toPrint.charAt(n);
                 _colors[i][j] = color.getValue();
-                n++;
+                j++;
+                if (j == _cols) {
+                    j = 0;
+                    i = (i + 1) % _rows;
+                }
             }
+            else{
+                j = 0;
+                i = (i + 1) % _rows;
+            }
+
+            n++;
         }
 
 
@@ -116,12 +128,9 @@ public  class Screen {
         _sWidth = _game.getGraphics().getWidth();
         _sHeight = _game.getGraphics().getHeight();
 
-        _tileY = _sHeight/_rows;
-        _tileX = _sWidth/_cols;
-        /*
-        _marginX = _sHeight-(_tileX*_cols);
-        _marginY = _sHeight -(_tileY*_rows);
-*/
+        _tileY = (_sHeight-_marginY)/_rows;
+        _tileX = (_sWidth-_marginX)/_cols;
+
         float tileAR = (float)_tileX/(float)_tileY;
         if(tileAR > 1.7f){
             _tileX = (int)(Math.floor((1.7f*_tileY)));
@@ -137,8 +146,8 @@ public  class Screen {
     public Pair getGridCoords(int pixelX, int pixelY){
         int tempx, tempy;
 
-        tempx = (pixelX - _marginX)/_tileX;
-        tempy = (pixelY - _marginY)/_tileY;
+        tempx = (pixelX - _marginX/2)/_tileX;
+        tempy = (pixelY - _marginY/2)/_tileY;
 
         return new Pair(tempx, tempy);
     }
@@ -149,6 +158,14 @@ public  class Screen {
     public int get_tileHeight(){
         return _tileY;
     }
+    public int get_cols() {
+        return _cols;
+    }
+
+    public int get_rows() {
+        return _rows;
+    }
+
 
 
 };

@@ -1,6 +1,8 @@
 package kekstar.fdi.nine11_logic;
 
 
+import kekstar.fdi.engine.Game;
+
 public abstract class GameState {
     abstract void tick();
     void draw()
@@ -10,8 +12,11 @@ public abstract class GameState {
     }
     abstract void init();
     abstract void deinit();
+    abstract void pollEvents();
 
     Screen screen;
+    Game _game;
+    Logic _logic;
 }
 
 

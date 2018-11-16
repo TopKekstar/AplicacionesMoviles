@@ -11,7 +11,7 @@ public class GamePC implements Game{
         this._input = _input;
     }
 
-    //TODO: El main solo tiene que inicializar Graphics, Input y Lógica. Lógica tiene el bucle de juego.
+
     public static void main (String [] args)
     {
         System.out.print("Init Game..");

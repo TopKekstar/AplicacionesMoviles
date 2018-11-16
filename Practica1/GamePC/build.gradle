@@ -3,7 +3,7 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':engine')
-    implementation project(':Nine11_PC')
+    implementation project(':EnginePC')
     implementation project(':Nine11_Logic')
 }
 

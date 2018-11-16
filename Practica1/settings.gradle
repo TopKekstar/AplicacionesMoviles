@@ -1,1 +1,1 @@
-include ':app', ':engine', ':Nine11_PC', ':Game', ':GamePC', ':GamePC', ':GamePC', ':GamePC', ':Nine11_Logic', ':engineandroid'
+include ':app', ':engine', ':EnginePC', ':Game', ':GamePC', ':GamePC', ':GamePC', ':GamePC', ':Nine11_Logic', ':engineandroid'
