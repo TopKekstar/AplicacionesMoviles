@@ -6,6 +6,7 @@ import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +26,7 @@ public class GraphicsAndroid implements Graphics  {
         assetManager_ = assetManager;
         surfaceView_ = surfaceView;
         surfaceHolder_ = surfaceView_.getHolder();
+        surfaceView.setVisibility(View.VISIBLE);
 
 
     }
@@ -32,9 +34,11 @@ public class GraphicsAndroid implements Graphics  {
 
     @Override
     public void clear(int color) {
+
         while (!surfaceHolder_.getSurface().isValid()){}
         currentCanvas_ = surfaceHolder_.lockCanvas();
-        currentCanvas_.drawColor(0xFF000000);
+
+        currentCanvas_.drawColor(color);
 
 
     }
@@ -43,7 +47,6 @@ public class GraphicsAndroid implements Graphics  {
     public int getWidth() {
         return surfaceView_.getWidth();
     }
-
     @Override
     public int getHeight() {
         return surfaceView_.getHeight();
@@ -97,8 +100,8 @@ public class GraphicsAndroid implements Graphics  {
 
     @Override
     public void present() {
-
         surfaceHolder_.unlockCanvasAndPost(currentCanvas_);
+
 
 
     }

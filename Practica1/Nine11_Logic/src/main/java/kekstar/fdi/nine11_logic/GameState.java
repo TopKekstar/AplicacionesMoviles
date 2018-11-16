@@ -1,18 +1,11 @@
 package kekstar.fdi.nine11_logic;
 
 
-
-enum gameState {
-    LoadScene,
-    IniScene,
-    DifScene,
-    GameScene,
-    EndScene
-}
 public abstract class GameState {
     abstract void tick();
     void draw()
     {
+        screen.clear(0x00000000);
         screen.draw();
     }
     abstract void init();

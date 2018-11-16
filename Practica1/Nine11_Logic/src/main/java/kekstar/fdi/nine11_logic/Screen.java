@@ -45,10 +45,13 @@ public  class Screen {
 
 
     public Screen(Game game, Logic l) {
+
         _logic = l;
         _game = game;
         _sHeight = game.getGraphics().getHeight();
         _sWidth = game.getGraphics().getWidth();
+        _marginX = 0;
+        _marginY = 0;
 
     }
     public void init (int rows, int cols){
@@ -73,7 +76,12 @@ public  class Screen {
         int n = 0;
         for (int i = yStart; i < _rows; i++) {
             for (int j = xStart; j < _cols; j++) {
-                if(n >= toPrint.length())return;
+                if(n >= toPrint.length())
+                    return;
+                else if(toPrint.charAt(n) == '\n'){
+                    n++;
+                    break;
+                }
                 grid[i][j] = toPrint.charAt(n);
                 _colors[i][j] = color.getValue();
                 n++;
@@ -86,15 +94,17 @@ public  class Screen {
     public void draw()
     {
 
-        for(int i = 0; i < _cols; i++)
+        //_logic.getSprite(2,'A').draw(_game.getGraphics(), new Rect(0,0,16,16));
+
+        for(int i = 0; i < _rows; i++)
         {
-            for(int j = 0; j < _rows; j++)
+            for(int j = 0; j < _cols; j++)
             {
                 Rect dest = new Rect (
-                        _marginX+(j*_tileX),
-                        _marginY+(i*_tileY),
-                        j*_tileX+_tileX,
-                        i*_tileY+_tileY );
+                        _marginX/2+(j*_tileX),
+                        _marginY/2+(i*_tileY),
+                        _tileX,
+                        _tileY );
 
                 _logic.getSprite(_colors[i][j], grid [i][j]).draw(_game.getGraphics(),dest);
             }
@@ -105,26 +115,23 @@ public  class Screen {
     {
         _sWidth = _game.getGraphics().getWidth();
         _sHeight = _game.getGraphics().getHeight();
-        int realScreenX = _sWidth;
-        int realScreenY = _sHeight;
 
-        //Variables para guardar el ancho a mantener con los lados o el TOP/BOT
-        _marginX = 0;
-        _marginY= 0;
-
-        float aspectR = _sWidth /_sHeight;
-
-        if(aspectR <= 1){
-            _sHeight = (int)(_sWidth / 1f);
-            _marginY = realScreenY-_sHeight;
+        _tileY = _sHeight/_rows;
+        _tileX = _sWidth/_cols;
+        /*
+        _marginX = _sHeight-(_tileX*_cols);
+        _marginY = _sHeight -(_tileY*_rows);
+*/
+        float tileAR = (float)_tileX/(float)_tileY;
+        if(tileAR > 1.7f){
+            _tileX = (int)(Math.floor((1.7f*_tileY)));
+            _marginX = _sWidth-(_tileX*_cols);
         }
-        else if (aspectR > 1.66f){
-            _sWidth = (int)(1.33f * (float)_sHeight);
-            _marginX = realScreenX-_sWidth;
+        else if (tileAR < 0.8f){
+            _tileY = (int)(Math.floor((_tileX/1.f)));
+            _marginY = _sHeight -(_tileY*_rows);
         }
 
-        _tileX = _sWidth /_cols;
-        _tileY = _sHeight /_rows;
     }
     //TODO: Implementar metodo que devuelva el tile pulsado en la pantalla
     public Pair getGridCoords(int pixelX, int pixelY){

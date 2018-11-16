@@ -29,12 +29,17 @@ public class MainActivity extends AppCompatActivity implements Game {
         super.onCreate(savedInstanceState);
         AssetManager assetManager = this.getAssets();
         renderView_ = new MyView(this,this);
+        setContentView(renderView_);
         graphics_ = new GraphicsAndroid(renderView_,assetManager);
         input_ = new InputAndroid();
         renderView_.setOnTouchListener(input_);
+
+/*
         logic_ = new Logic(this);
+
         logic_.initLogic();
-        setContentView(renderView_);
+*/
+
 
 
 
@@ -88,6 +93,12 @@ public class MainActivity extends AppCompatActivity implements Game {
 
         @Override
         public void run() {
+            android.util.Log.i("BOMB", "RUN()");
+            logic_ = new Logic(game_);
+
+            logic_.initLogic();
+
+            while (getWidth()<=0){}
             while (_running){
                 logic_.run();
             }

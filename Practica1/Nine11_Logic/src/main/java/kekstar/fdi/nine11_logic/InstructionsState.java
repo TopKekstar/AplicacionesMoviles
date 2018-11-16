@@ -22,9 +22,9 @@ public class InstructionsState extends GameState{
     @Override
     public void init() {
 
-        String instrucciones = "Usted esta conduciendo bla bla bla";
+        String instrucciones = "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
         screen = new Screen(_game, _logic);
-        screen.init(25,40);
+        screen.init(25,45);
 
         screen.print(instrucciones, 0,0,color.WHITE);
 
