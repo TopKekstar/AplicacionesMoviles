@@ -1,19 +1,18 @@
 package kekstar.fdi.nine11_logic;
 
-import java.sql.Time;
 import java.util.List;
 
 import kekstar.fdi.engine.Game;
 import kekstar.fdi.engine.TouchEvent;
 
-public class InstructionsState extends GameState{
+public class GameOverState extends GameState{
     private Game _game;
     private Logic _logic;
     int i = 0;
     int j = 0;
 
 
-    public InstructionsState(Game g, Logic l) {
+    public GameOverState(Game g, Logic l) {
         this._game = g;
         this._logic = l;
 
@@ -28,12 +27,13 @@ public class InstructionsState extends GameState{
 
     @Override
     public void init() {
-        String instrucciones = "Usted esta pilotando un avion sobre una ciudad desierta y tiene que pasar sobre " +
-                "los edificios para aterrizar y repostar. Su avion se mueve de izquierda a derecha.\n"+
-                "\nAl llegar a la derecha el avion vuelve a salir por la izquierda pero MAS BAJO. Dispone de un numero limitado de bombas"
-                + "y puede hacerlas caer sobre los edificios pulsando sobre la pantalla.\n" +
-                "\nCada vez que aterriza, sube la altura de los edificios y la velodicad.\n" +
-                "\nUNA VEZ DISPARADA UNA BOMBA YA NO PUEDE DISPARAR OTRA MIENTRAS NO HAYA EXPLOSIONADO LA PRIMERA!!!!\n";
+
+        String instrucciones = "HA CONSEGUIDO "+ _logic.get_currentScore()+"\n";
+        if(_logic.get_currentScore()>_logic.get_maxScore()) {
+            instrucciones += "HA REVENTADO EL PUTO RECORD!!!\n\n\n";
+            _logic.set_maxScore(_logic.get_currentScore());
+            _logic.set_currentScore(0);
+        }
 
         screen = new Screen(_game, _logic);
         screen.init(25,45);

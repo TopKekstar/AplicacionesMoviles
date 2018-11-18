@@ -38,7 +38,7 @@ public class PlayState extends GameState {
     {
         _game = game;
         _logic = logic;
-        _score = 0;
+        logic.set_currentScore(0);
 
     }
 
@@ -70,10 +70,10 @@ public class PlayState extends GameState {
                     if(_landed) {
                         _logic.set_gameDif(Math.abs(_logic.get_gameDif()-1%6));
                         _actState = substate.build;
-                        _score+= 100;
-                        String score= Integer.toString(_score);
+                        _logic.set_currentScore(_logic.get_currentScore()+100);
+                        String score= Integer.toString(_logic.get_currentScore());
                         screen.print(score, 7,screen.get_rows()-1, color.RED );
-                        int temp = _score;
+                        int temp = _logic.get_currentScore();
                         this.init();
                         setScore(temp);
                     }
@@ -114,7 +114,7 @@ public class PlayState extends GameState {
         _planePos = new Pair(1,1);
         _bombPos = new Pair(0,0);
         _landed = false;
-        _score = 0;
+
 
 
         Random rand = new Random();
@@ -126,7 +126,7 @@ public class PlayState extends GameState {
             screen.print("_",i,screen.get_rows()-2, color.WHITE);
         }
         screen.print("PUNTOS",0, screen.get_rows()-1, color.RED);
-        String score= Integer.toString(_score);
+        String score= Integer.toString(_logic.get_currentScore());
         screen.print(score, 7,screen.get_rows()-1, color.RED );
 
 
@@ -177,23 +177,23 @@ public class PlayState extends GameState {
 
     @Override
     void pollEvents() {
+
+
         List<TouchEvent> temp;
         temp = _game.getInput().getTouchEvents();
         if (temp != null) {
             for (TouchEvent tE : temp) {
-                synchronized (this) {
-                    if(tE.get_eventType() == TouchEvent.eventType.BUTTON_PRESSED && tE.get_buttonIndex()== 1){
-                        if(!_bombDropped&&_actState==substate.play){
-                            Random rand = new Random();
-                            _bombDropped = true;
-                            _bombPos.x = 1+_planePos.x;
-                            _bombPos.y =1+ _planePos.y;
-                            _bomStrenght = rand.nextInt(2)+2;
+                if (tE.get_eventType() == TouchEvent.eventType.BUTTON_PRESSED && tE.get_buttonIndex() == 1) {
+                    if (!_bombDropped && _actState == substate.play) {
+                        Random rand = new Random();
+                        _bombDropped = true;
+                        _bombPos.x = 1 + _planePos.x;
+                        _bombPos.y = 1 + _planePos.y;
+                        _bomStrenght = rand.nextInt(2) + 2;
 
-                        }
                     }
-                    temp.remove(tE);
                 }
+                temp.remove(tE);
             }
         }
     }
@@ -212,11 +212,11 @@ public class PlayState extends GameState {
             String s="";
             s+=c;
             _planePos.x++;
-            screen.print(s,_planePos.x,_planePos.y,color.WHITE);
+            screen.print(s,_planePos.x,_planePos.y,color.GREEN);
             _actState = substate.end;
 
         }else{
-            screen.print(_planeDraw,_planePos.x,_planePos.y,color.WHITE);
+            screen.print(_planeDraw,_planePos.x,_planePos.y,color.GREEN);
         }
 
     }
@@ -224,20 +224,23 @@ public class PlayState extends GameState {
         if(_bombDropped) {
             screen.print(" ", _bombPos.x, _bombPos.y, color.BLACK);
             _bombPos.y++;
-            if(_bombPos.y<23&&!checkColision(_bombPos.x,_bombPos.y)){
+            if(_bombPos.y<22&&!checkColision(_bombPos.x,_bombPos.y)){
                 screen.print(_bombPaint, _bombPos.x, _bombPos.y, color.GREEN);
             }else if(checkColision(_bombPos.x,_bombPos.y)&&_bomStrenght > 0){
                 char c = 188;
+                if(_bomStrenght==3)c = 188;
+                if(_bomStrenght==2)c = 238;
+                if(_bomStrenght==1)c = 253;
+
                 String s ="";
                 s+= c;
                 screen.print(s, _bombPos.x, _bombPos.y, color.GREEN);
-                System.out.println(_bombPos.x-4);
-                System.out.println(buildings);
+
 
                 buildings[_bombPos.x-4]--;
                 _bomStrenght--;
-                _score += 5;
-                String score= Integer.toString(_score);
+                _logic.set_currentScore(_logic.get_currentScore()+5);
+                String score= Integer.toString(_logic.get_currentScore());
                 screen.print(score, 7,screen.get_rows()-1, color.RED );
             }else{
                 _bombDropped =false;

@@ -17,12 +17,16 @@ import static android.content.ContentValues.TAG;
 public class InputAndroid implements Input,View.OnTouchListener {
 
     public InputAndroid(){
-        touchEvents = new LinkedList<>();
+        _touchEvents = new LinkedList<>();
 
     }
     @Override
     public List<TouchEvent> getTouchEvents() {
-        return touchEvents;
+        synchronized (this){
+            LinkedList<TouchEvent>aux = new LinkedList<>(_touchEvents);
+            _touchEvents.clear();
+            return aux;
+        }
     }
 
     @Override
@@ -45,7 +49,7 @@ public class InputAndroid implements Input,View.OnTouchListener {
                 insert = true;
                 break;
         }
-        if(insert && touchEvents.size() < 10) {
+        if(insert ) {
             TouchEvent touchEvent = new TouchEvent(
                     event.getActionIndex()+1, //+1 TO adjust to the same scheme as java PC
                     eventType,
@@ -54,11 +58,11 @@ public class InputAndroid implements Input,View.OnTouchListener {
 
 
             synchronized (this) {
-                touchEvents.addLast(touchEvent);
+               _touchEvents.addLast(touchEvent);
             }
         }
 
         return true;
     }
-    LinkedList<TouchEvent> touchEvents;
+    LinkedList<TouchEvent> _touchEvents;
 }

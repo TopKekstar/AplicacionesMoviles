@@ -131,6 +131,25 @@ public class Logic {
     int _gameDif;
     int _gameHeight;
     int _gameSpeed;
+    private int _currentScore;
+
+    public int get_currentScore() {
+        return _currentScore;
+    }
+
+    public void set_currentScore(int _currentScore) {
+        this._currentScore = _currentScore;
+    }
+
+    public int get_maxScore() {
+        return _maxScore;
+    }
+
+    public void set_maxScore(int _maxScore) {
+        this._maxScore = _maxScore;
+    }
+
+    private int _maxScore;
 
 }
 

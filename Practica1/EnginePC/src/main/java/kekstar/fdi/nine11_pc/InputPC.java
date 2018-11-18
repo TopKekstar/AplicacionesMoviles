@@ -26,7 +26,11 @@ public class InputPC implements Input, MouseListener {
     //TODO: Implementar inputPC y getTouchEvents
     @Override
     public List<TouchEvent> getTouchEvents(){
-        return _touchEvents;
+        synchronized (this){
+            LinkedList<TouchEvent>aux = new LinkedList<>(_touchEvents);
+            _touchEvents.clear();
+            return aux;
+        }
     }
 
     @Override
