@@ -16,6 +16,7 @@ enum substate {
 public class PlayState extends GameState {
 
     boolean built;
+    boolean _landed;
     substate _actState;
 
     int buildings[];
@@ -30,12 +31,14 @@ public class PlayState extends GameState {
     boolean _bombDropped;
     String _bombPaint;
     int _bomStrenght;
+    int _score;
 
 
     public PlayState(Game game, Logic logic)
     {
         _game = game;
         _logic = logic;
+        _score = 0;
 
     }
 
@@ -64,9 +67,15 @@ public class PlayState extends GameState {
                 case landing:
                     moveBomb();
                     movePlane();
-                    if(_planePos.isEqual(new Pair (21, 16))) {
+                    if(_landed) {
                         _logic.set_gameDif(Math.abs(_logic.get_gameDif()-1%6));
                         _actState = substate.build;
+                        _score+= 100;
+                        String score= Integer.toString(_score);
+                        screen.print(score, 7,screen.get_rows()-1, color.RED );
+                        int temp = _score;
+                        this.init();
+                        setScore(temp);
                     }
                     break;
                 case end:
@@ -74,6 +83,7 @@ public class PlayState extends GameState {
 
             }
         }
+
 
 
 
@@ -103,21 +113,21 @@ public class PlayState extends GameState {
         _actState = substate.build;
         _planePos = new Pair(1,1);
         _bombPos = new Pair(0,0);
+        _landed = false;
+        _score = 0;
 
 
         Random rand = new Random();
         for(int i = 0; i < buildings.length; i++){
-<<<<<<< HEAD
-            buildings[i] = (5-_logic.get_gameDif())+rand.nextInt(8);
-=======
-            buildings[i] = _logic.get_gameDif()+rand.nextInt(7)+1;
->>>>>>> fc2f4eab55b28b1dd0e7eb81668ef01fbe2af471
+            buildings[i] = (5-_logic.get_gameDif()) +rand.nextInt(8);
         }
 
         for(int i = 0; i < screen.get_cols(); i++){
             screen.print("_",i,screen.get_rows()-2, color.WHITE);
         }
         screen.print("PUNTOS",0, screen.get_rows()-1, color.RED);
+        String score= Integer.toString(_score);
+        screen.print(score, 7,screen.get_rows()-1, color.RED );
 
 
         screen.print("MAX 0", screen.get_cols()- 5, screen.get_rows()-1, color.RED);
@@ -130,27 +140,34 @@ public class PlayState extends GameState {
 
         char c;
         String s;
-        if(buildings[buildIndex]<=buildL) {
+        if(buildIndex>10)
+            return true;
+        if(buildings[buildIndex] == 0){
+            screen.print(" ",4+buildIndex,21-buildL, color.values()[buildIndex+1]);
+            buildIndex++;
+            buildL = 0;
+            return false;
+        }
+        else if(buildings[buildIndex]<=buildL) {
             c = 244;
             s="";
             s+=c;
-            screen.print(s,5+buildIndex,22-buildL, color.values()[buildIndex+1]);
+            screen.print(s,4+buildIndex,21-buildL, color.values()[buildIndex+1]);
 
             buildIndex++;
             buildL=0;
+            return false;
         }
-        if(buildIndex>=11)
-            return true;
         c = 143;
         s="";
         s += c;
 
 
-
-        screen.print(s,5+buildIndex,22-buildL, color.values()[buildIndex+1]);
+        screen.print(s,4+buildIndex,21-buildL, color.values()[buildIndex+1]);
         buildL++;
-
         return false;
+
+
     }
 
     @Override
@@ -187,6 +204,8 @@ public class PlayState extends GameState {
         if(_planePos.x>18){
             _planePos.x = 1;
             _planePos.y++;
+            if(_planePos.y >= 21)
+                _landed = true;
         }
         if(checkColision(_planePos.x+1,_planePos.y)){
             char c =238;
@@ -212,8 +231,14 @@ public class PlayState extends GameState {
                 String s ="";
                 s+= c;
                 screen.print(s, _bombPos.x, _bombPos.y, color.GREEN);
-                buildings[_bombPos.x-5]--;
+                System.out.println(_bombPos.x-4);
+                System.out.println(buildings);
+
+                buildings[_bombPos.x-4]--;
                 _bomStrenght--;
+                _score += 5;
+                String score= Integer.toString(_score);
+                screen.print(score, 7,screen.get_rows()-1, color.RED );
             }else{
                 _bombDropped =false;
             }
@@ -225,11 +250,14 @@ public class PlayState extends GameState {
         for (int i =0;i< buildings.length;++i){
             if(buildings[i]>0)return false;
         }
-
+        _sleepTime /= 10;
         return true;
     }
     boolean checkColision(int posX,int posY){
         char c = screen.getGridCharAt(posX,posY);
         return c==143 || c ==244;
+    }
+    void setScore(int nScore){
+        _score = nScore;
     }
 }

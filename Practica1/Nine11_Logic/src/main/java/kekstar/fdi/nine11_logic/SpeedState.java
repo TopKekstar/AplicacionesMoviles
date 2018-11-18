@@ -25,7 +25,7 @@ class SpeedState extends GameState {
         screen = new Screen(_game, _logic);
         screen.init(25,45);
 
-        String aux = "Elija una velocidad: 0 MAX a 9 (MIN)";
+        String aux = "Elija una velocidad: 0 (MAX) a 9 (MIN)";
 
         int Ystart = (screen.get_rows()/2)-1;
         int Xstart = (screen.get_cols()-aux.length())/2 ;
