@@ -23,10 +23,11 @@ enum color {
     LIGHTGREEN(15);
 
     private int value;
-    private color(int val){value = val;}
+    color(int val){value = val;}
     public int getValue(){
         return value;
     }
+
 }
 
 public  class Screen {
@@ -62,9 +63,17 @@ public  class Screen {
         _cols = cols;
 
         grid = new char[rows][cols];
-        for(int i = 0; i < rows; i++)grid [i] = new char[cols];
+        for(int i = 0; i < rows; i++){
+            grid [i] = new char[cols];
+            for (int j =0;j<cols;j++)
+                grid[i][j] = ' ';
+        }
         _colors = new int [rows][cols];
-        for(int i = 0; i < rows; i++)_colors [i] = new int[cols];
+        for(int i = 0; i < rows; i++){
+            _colors [i] = new int[cols];
+            for (int j =0;j<cols;j++)
+                _colors[i][j] = 0;
+        }
 
         calculateTileSize();
     }
@@ -119,7 +128,7 @@ public  class Screen {
             }
         }
 
-        _game.getGraphics().present();
+
     }
 
     public void calculateTileSize()

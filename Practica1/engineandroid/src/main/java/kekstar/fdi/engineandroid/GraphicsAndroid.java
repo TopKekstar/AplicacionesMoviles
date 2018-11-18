@@ -28,6 +28,7 @@ public class GraphicsAndroid implements Graphics  {
         surfaceHolder_ = surfaceView_.getHolder();
         surfaceView.setVisibility(View.VISIBLE);
 
+
         currentCanvas_ = surfaceHolder_.lockCanvas();
 
 
@@ -36,7 +37,11 @@ public class GraphicsAndroid implements Graphics  {
 
     @Override
     public void clear(int color) {
+
+        while (!surfaceHolder_.getSurface().isValid()){}
+        currentCanvas_ = surfaceHolder_.lockCanvas();
         currentCanvas_.drawColor(color);
+        currentCanvas_.drawRect(0,0,(float) getWidth(),(float)getHeight(),null);
     }
 
     @Override
@@ -97,8 +102,7 @@ public class GraphicsAndroid implements Graphics  {
     @Override
     public void present() {
         surfaceHolder_.unlockCanvasAndPost(currentCanvas_);
-        while (!surfaceHolder_.getSurface().isValid()){}
-        currentCanvas_ = surfaceHolder_.lockCanvas();
+
     }
 
 
