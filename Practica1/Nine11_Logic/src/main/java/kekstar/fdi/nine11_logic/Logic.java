@@ -37,6 +37,8 @@ public class Logic {
         _activeState = 0;
         _states.add(new InstructionsState(_game, this));
         _states.add(new DificultyState(_game, this));
+        _states.add(new SpeedState(_game, this));
+        _states.add(new PlayState(_game, this));
 
         _states.get(0).init();
     }
@@ -78,12 +80,19 @@ public class Logic {
     }
 
 
-    public void changeScene(int nScene){
-        int temp = _activeState;
-        _activeState = nScene;
-        _states.get(temp).deinit();
-        _states.get(_activeState).init();
+    public void changeState(int nState){
 
+        try {
+            int temp = _activeState;
+            _activeState = nState;
+            _states.get(temp).deinit();
+            _states.get(_activeState).init();
+        }
+        catch(Exception e){
+            System.out.println("Could not Load new State. State was nullptr");
+            System.out.print(e.getMessage());
+
+        }
     }
     public int get_activeState() {
         return _activeState;
@@ -102,6 +111,14 @@ public class Logic {
     public int get_gameHeight(){
         return _gameHeight;
     }
+    public int get_gameSpeed() {
+        return _gameSpeed;
+    }
+
+    public void set_gameSpeed(int gameSpeed) {
+        this._gameSpeed = gameSpeed;
+    }
+
 
     Game _game;
     ArrayList<ArrayList<Sprite>> sprites;
@@ -112,6 +129,7 @@ public class Logic {
     int _activeState;
     int _gameDif;
     int _gameHeight;
+    int _gameSpeed;
 
 }
 

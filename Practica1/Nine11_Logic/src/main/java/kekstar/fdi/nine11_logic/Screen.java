@@ -105,10 +105,7 @@ public  class Screen {
 
     public void draw()
     {
-
-        //_logic.getSprite(2,'A').draw(_game.getGraphics(), new Rect(0,0,16,16));
-
-        for(int i = 0; i < _rows; i++)
+        for (int i = 0; i < _rows; i++)
         {
             for(int j = 0; j < _cols; j++)
             {
@@ -121,6 +118,8 @@ public  class Screen {
                 _logic.getSprite(_colors[i][j], grid [i][j]).draw(_game.getGraphics(),dest);
             }
         }
+
+        _game.getGraphics().present();
     }
 
     public void calculateTileSize()
@@ -150,6 +149,15 @@ public  class Screen {
         tempy = (pixelY - _marginY/2)/_tileY;
 
         return new Pair(tempx, tempy);
+    }
+    public char getGridCharAt(int gridX, int gridY){
+        return grid[gridY][gridX];
+    }
+
+    public char getCharAtScreenCoords(int screenX, int screenY){
+        Pair aux = this.getGridCoords(screenX, screenY);
+        return grid[aux.getY()][aux.getX()];
+
     }
 
     public int getTileWidth(){

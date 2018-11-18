@@ -47,7 +47,7 @@ public class InputAndroid implements Input,View.OnTouchListener {
         }
         if(insert) {
             TouchEvent touchEvent = new TouchEvent(
-                    event.getActionIndex(),
+                    event.getActionIndex()+1, //+1 TO adjust to the same scheme as java PC
                     eventType,
                     (int) event.getX(),
                     (int) event.getY());

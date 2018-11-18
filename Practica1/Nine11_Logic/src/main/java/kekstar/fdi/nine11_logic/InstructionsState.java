@@ -13,16 +13,10 @@ public class InstructionsState extends GameState{
     int j = 0;
 
 
-    //TODO: RETIRAR ESTO
-    double lastTime;
-    double actTime;
-    double elapsed;
-
     public InstructionsState(Game g, Logic l) {
         this._game = g;
         this._logic = l;
-        lastTime = System.currentTimeMillis();
-        actTime = lastTime;
+
 
     }
     @Override
@@ -48,7 +42,7 @@ public class InstructionsState extends GameState{
         screen.print(instrucciones, 0,0,color.LIGHTGREEN);
         screen.print("Pulse para empezar...", 0, screen.get_rows()-5, color.RED);
 
-        //Copiamos de color a
+
     }
     @Override
     public void pollEvents () {
@@ -58,7 +52,7 @@ public class InstructionsState extends GameState{
             for (TouchEvent tE : temp) {
                 synchronized (this) {
                     if(tE.get_eventType() == TouchEvent.eventType.BUTTON_PRESSED && tE.get_buttonIndex()== 1){
-                        _logic.changeScene(_logic.get_activeState()+1);
+                        _logic.changeState(_logic.get_activeState()+1);
                     }
                     temp.remove(tE);
                 }

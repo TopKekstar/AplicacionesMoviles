@@ -94,11 +94,10 @@ public class MainActivity extends AppCompatActivity implements Game {
         @Override
         public void run() {
             android.util.Log.i("BOMB", "RUN()");
-            logic_ = new Logic(game_);
-
-            logic_.initLogic();
-
             while (getWidth()<=0){}
+
+            logic_ = new Logic(game_);
+            logic_.initLogic();
             while (_running){
                 logic_.run();
             }
