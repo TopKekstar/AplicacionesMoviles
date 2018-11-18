@@ -107,7 +107,11 @@ public class PlayState extends GameState {
 
         Random rand = new Random();
         for(int i = 0; i < buildings.length; i++){
+<<<<<<< HEAD
             buildings[i] = (5-_logic.get_gameDif())+rand.nextInt(8);
+=======
+            buildings[i] = _logic.get_gameDif()+rand.nextInt(7)+1;
+>>>>>>> fc2f4eab55b28b1dd0e7eb81668ef01fbe2af471
         }
 
         for(int i = 0; i < screen.get_cols(); i++){

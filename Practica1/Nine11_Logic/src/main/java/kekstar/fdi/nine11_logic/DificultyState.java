@@ -43,16 +43,18 @@ public class DificultyState extends GameState {
     @Override
     void pollEvents() {
         List<TouchEvent> temp;
-        temp = _game.getInput().getTouchEvents();
-        if (temp != null) {
-            for (TouchEvent tE : temp) {
-                synchronized (this) {
-                    if(tE.get_eventType() == TouchEvent.eventType.BUTTON_PRESSED && tE.get_buttonIndex()== 1){
+        synchronized (this) {
+
+            temp = _game.getInput().getTouchEvents();
+            if (temp != null) {
+                for (TouchEvent tE : temp) {
+
+                    if (tE.get_eventType() == TouchEvent.eventType.BUTTON_PRESSED && tE.get_buttonIndex() == 1) {
 
                         char touched = screen.getCharAtScreenCoords(tE.getX(), tE.getY());
-                        if((int)touched >47 && (int)touched < 54) {
-                            _logic.set_gameDif(((int)touched-48));
-                            _logic.changeState(_logic.get_activeState()+1);
+                        if ((int) touched > 47 && (int) touched < 54) {
+                            _logic.set_gameDif(((int) touched - 48));
+                            _logic.changeState(_logic.get_activeState() + 1);
                         }
                     }
                     temp.remove(tE);

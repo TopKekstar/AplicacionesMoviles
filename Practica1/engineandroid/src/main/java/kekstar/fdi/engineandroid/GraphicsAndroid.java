@@ -3,6 +3,7 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,12 +23,13 @@ public class GraphicsAndroid implements Graphics  {
     private AssetManager assetManager_;
     private SurfaceHolder surfaceHolder_;
     private Canvas currentCanvas_;
+    private Paint paint_;
     public GraphicsAndroid(SurfaceView surfaceView,AssetManager assetManager){
         assetManager_ = assetManager;
         surfaceView_ = surfaceView;
         surfaceHolder_ = surfaceView_.getHolder();
         surfaceView.setVisibility(View.VISIBLE);
-
+        paint_=new Paint();
 
         currentCanvas_ = surfaceHolder_.lockCanvas();
 
@@ -41,7 +43,8 @@ public class GraphicsAndroid implements Graphics  {
         while (!surfaceHolder_.getSurface().isValid()){}
         currentCanvas_ = surfaceHolder_.lockCanvas();
         currentCanvas_.drawColor(color);
-        currentCanvas_.drawRect(0,0,(float) getWidth(),(float)getHeight(),null);
+
+        currentCanvas_.drawRect(0,0,(float) getWidth(),(float)getHeight(),paint_);
     }
 
     @Override
