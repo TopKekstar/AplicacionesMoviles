@@ -45,7 +45,7 @@ public class InputAndroid implements Input,View.OnTouchListener {
                 insert = true;
                 break;
         }
-        if(insert) {
+        if(insert && touchEvents.size() < 10) {
             TouchEvent touchEvent = new TouchEvent(
                     event.getActionIndex()+1, //+1 TO adjust to the same scheme as java PC
                     eventType,
