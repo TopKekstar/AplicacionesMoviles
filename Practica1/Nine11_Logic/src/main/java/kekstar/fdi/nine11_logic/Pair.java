@@ -6,6 +6,10 @@ public class Pair {
         x = xn;
         y = yn;
     }
+    public boolean isEqual (Pair aux)
+    {
+        return (aux.getX() == x && aux.getY() == y);
+    }
     int getX(){return x;}
     int getY(){return y;}
     int x;

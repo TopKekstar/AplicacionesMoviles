@@ -43,7 +43,7 @@ public class PlayState extends GameState {
     void tick() {
         pollEvents();
         try {
-            Thread.sleep(_sleepTime);
+            Thread.sleep(_sleepTime/2);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -63,10 +63,14 @@ public class PlayState extends GameState {
                     break;
                 case landing:
                     moveBomb();
+                    movePlane();
+                    if(_planePos.isEqual(new Pair (21, 16))) {
+                        _logic.set_gameDif(Math.abs(_logic.get_gameDif()-1%6));
+                        _actState = substate.build;
+                    }
                     break;
                 case end:
                     break;
-
 
             }
         }
@@ -103,16 +107,16 @@ public class PlayState extends GameState {
 
         Random rand = new Random();
         for(int i = 0; i < buildings.length; i++){
-            buildings[i] = _logic.get_gameDif()+rand.nextInt(1)+1;
+            buildings[i] = (5-_logic.get_gameDif())+rand.nextInt(8);
         }
 
         for(int i = 0; i < screen.get_cols(); i++){
             screen.print("_",i,screen.get_rows()-2, color.WHITE);
         }
-        screen.print("PUNTOS",0, screen.get_rows()-1, color.WHITE);
+        screen.print("PUNTOS",0, screen.get_rows()-1, color.RED);
 
 
-        screen.print("MAX 0", screen.get_cols()- 5, screen.get_rows()-1, color.WHITE);
+        screen.print("MAX 0", screen.get_cols()- 5, screen.get_rows()-1, color.RED);
 
     }
 
