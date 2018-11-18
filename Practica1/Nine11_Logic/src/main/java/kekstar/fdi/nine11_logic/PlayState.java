@@ -73,9 +73,8 @@ public class PlayState extends GameState {
                         _logic.set_currentScore(_logic.get_currentScore()+100);
                         String score= Integer.toString(_logic.get_currentScore());
                         screen.print(score, 7,screen.get_rows()-1, color.RED );
-                        int temp = _logic.get_currentScore();
                         this.init();
-                        setScore(temp);
+
                     }
                     break;
                 case end:
@@ -260,8 +259,5 @@ public class PlayState extends GameState {
     boolean checkColision(int posX,int posY){
         char c = screen.getGridCharAt(posX,posY);
         return c==143 || c ==244;
-    }
-    void setScore(int nScore){
-        _score = nScore;
     }
 }

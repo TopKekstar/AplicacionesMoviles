@@ -97,6 +97,9 @@ public class Logic {
 
         }
     }
+    public void calculateTileSize() {
+        _states.get(_activeState).calculateTileSize();
+    }
     public int get_activeState() {
         return _activeState;
     }

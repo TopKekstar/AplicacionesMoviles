@@ -10,6 +10,9 @@ public abstract class GameState {
         screen.clear(0x00000000);
         screen.draw();
     }
+    public void calculateTileSize(){
+        screen.calculateTileSize();
+    }
     abstract void init();
     abstract void deinit();
     abstract void pollEvents();

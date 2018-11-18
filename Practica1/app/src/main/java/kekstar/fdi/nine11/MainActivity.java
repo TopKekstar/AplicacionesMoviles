@@ -2,6 +2,7 @@ package kekstar.fdi.nine11;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.SurfaceView;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements Game {
     protected InputAndroid        input_;
     private MyView              renderView_;
     private Logic               logic_;
-
+    boolean logicInit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements Game {
         graphics_ = new GraphicsAndroid(renderView_,assetManager);
         input_ = new InputAndroid();
         renderView_.setOnTouchListener(input_);
-
+        logicInit = false;
 /*
         logic_ = new Logic(this);
 
@@ -41,10 +42,14 @@ public class MainActivity extends AppCompatActivity implements Game {
 */
 
 
-
-
-
     }
+    @Override
+    public void onConfigurationChanged (Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        logic_.calculateTileSize();
+    }
+
+
     @Override
     protected void onResume(){
         super.onResume();
@@ -93,11 +98,12 @@ public class MainActivity extends AppCompatActivity implements Game {
 
         @Override
         public void run() {
-            android.util.Log.i("BOMB", "RUN()");
             while (getWidth()<=0){}
-
-            logic_ = new Logic(game_);
-            logic_.initLogic();
+            if(!logicInit) {
+                logic_ = new Logic(game_);
+                logic_.initLogic();
+                logicInit = true;
+            }
             while (_running){
                 logic_.run();
             }
