@@ -39,6 +39,8 @@ public class Logic {
         _states.add(new DificultyState(_game, this));
         _states.add(new SpeedState(_game, this));
         _states.add(new PlayState(_game, this));
+        _states.add(new GameOverState(_game, this));
+
 
         _states.get(0).init();
     }

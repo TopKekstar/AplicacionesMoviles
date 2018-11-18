@@ -79,6 +79,7 @@ public class PlayState extends GameState {
                     }
                     break;
                 case end:
+                    _logic.changeState(_logic.get_activeState()+1);
                     break;
 
             }
@@ -130,7 +131,7 @@ public class PlayState extends GameState {
         screen.print(score, 7,screen.get_rows()-1, color.RED );
 
 
-        screen.print("MAX 0", screen.get_cols()- 5, screen.get_rows()-1, color.RED);
+        screen.print("MAX "+_logic.get_maxScore(), screen.get_cols()- 8, screen.get_rows()-1, color.RED);
 
     }
 

@@ -51,7 +51,7 @@ public class GameOverState extends GameState{
             for (TouchEvent tE : temp) {
                 synchronized (this) {
                     if(tE.get_eventType() == TouchEvent.eventType.BUTTON_PRESSED && tE.get_buttonIndex()== 1){
-                        _logic.changeState(_logic.get_activeState()+1);
+                        _logic.changeState(1);
                     }
                     temp.remove(tE);
                 }
