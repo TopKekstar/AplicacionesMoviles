@@ -54,12 +54,14 @@ public class MainActivity extends AppCompatActivity implements Game {
     protected void onResume(){
         super.onResume();
         renderView_.resume();
+
     }
 
     @Override
     protected void onPause(){
         super.onPause();
         renderView_.pause();
+
     }
 
     @Override
@@ -103,6 +105,8 @@ public class MainActivity extends AppCompatActivity implements Game {
                 logic_ = new Logic(game_);
                 logic_.initLogic();
                 logicInit = true;
+            }else{
+                logic_.calculateTileSize();
             }
             while (_running){
                 logic_.run();
